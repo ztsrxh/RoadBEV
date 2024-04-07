@@ -8,9 +8,6 @@ We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with 
 
 ![image](imgs/mono.png)
 ![image](imgs/stereo.png "hhhh")
-<center style="font-size:14px;color:#C0C0C0;text-decoration:underline">Backbone of RoadBEV-stereo</center>
-
-
 
 ## Data preparation
 
