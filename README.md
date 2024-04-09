@@ -65,8 +65,8 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 
 ## Results
 ### Pretrained Model
-[RoadBEV-mono](https://drive.google.com/file/d/1bWDII9H2xwyKU0rgED5l-P8vXeUymyCW/view?usp=sharing), 
-[RoadBEV-stereo](https://drive.google.com/file/d/1qxtDyKbso-k5-sRuLMbqJMYdsg9OWf5-/view?usp=sharing)
+[RoadBEV-mono](), 
+[RoadBEV-stereo]()
 
 ### Performance for road surface reconstruction with RoadBEV-mono
 | Method | Abs. err. (cm) | RMSE |
