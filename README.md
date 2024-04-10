@@ -7,7 +7,7 @@ Road surface reconstruction, an essential task for autonomous driving comfort co
 We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with monocular and stereo images, respectively.
 
 ![image](imgs/mono.png)
-![image](imgs/stereo.png "hhhh")
+![image](imgs/stereo.png)
 
 ## Data preparation
 
@@ -39,7 +39,7 @@ conda activate roadbev
 ```
 ### Dependencies
 ```
-conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c nvidia
+conda install pytorch=1.10.0 torchvision torchaudio cudatoolkit=11.1 -c pytorch -c nvidia
 conda install -c open3d-admin open3d
 pip install opencv-python
 pip install pillow
@@ -65,8 +65,8 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 
 ## Results
 ### Pretrained Model
-[RoadBEV-mono](), 
-[RoadBEV-stereo]()
+[RoadBEV-mono](https://drive.google.com/file/d/1i-QgX8rLTDUmqpRN7bM4_AzK8dgk_PUn/view?usp=sharing), 
+[RoadBEV-stereo](https://drive.google.com/file/d/1amjd5x_UWiurxD7e7YH8Vv0Ll3VqQ9FK/view?usp=sharing)
 
 ### Performance for road surface reconstruction with RoadBEV-mono
 | Method | Abs. err. (cm) | RMSE |
