@@ -17,7 +17,7 @@ class RSRD(Dataset):
 
         self.calib_path = '/dataset/RSRD_calib/'  # path for calibration files
         self.data_path = '/dataset/RSRD-dense/train/'     # path for the training set of RSRD-dense
-        preprocessed_path = '/dataset/RSRD-dense/preprocessed/'  # path for preprocessed GT maps
+        preprocessed_path = '/dataset/RSRD-dense/ele_preprocessed/'  # path for preprocessed GT maps
 
         if self.training:
             self.load_dataset_names('./filenames/train/')
@@ -92,7 +92,7 @@ class RSRD(Dataset):
 
     def load_dataset_names(self, sample_path):
         data_all = []
-        files = os.listdir(sample_path)
+        files = sorted(os.listdir(sample_path))
         for file in files:
             with open(os.path.join(sample_path, file), 'rb') as f:
                 data = pickle.load(f)
@@ -230,19 +230,19 @@ class RSRD(Dataset):
         ######   create the GT elevation map  ########
         ele_gt, ele_mask = self.get_gt_preprocessed(sample_cur['time'])
 
-        #########   calculate the index relationship between 3D voxels and 2D pixels   ##############
-        voxel_cam_left = R_vert2cam @ self.voxel_centers
-        uvz_left = l2c_calib_cur['K_feat_T'] @ voxel_cam_left
-        voxel_uv_left = torch.floor(uvz_left[:2, :] / uvz_left[2:, :]).type(torch.long)
         ##########  read the RGB images   ############
         path_img = os.path.join(self.data_path, path_base, 'left_half', sample_cur['time']) + '.jpg'
         img = PIL.Image.open(path_img).crop((0, 0, 960, 528))
         imgs_left = self.transform_jpg(img)
 
+        voxel_cam_left = R_vert2cam @ self.voxel_centers
         if self.stereo:
+            #########   calculate the index relationship between 3D voxels and 2D pixels   ##############
             voxel_cam_right = voxel_cam_left
             voxel_cam_right[0, :] = voxel_cam_right[0, :] - l2c_calib_cur['B']
-            uvz_right = l2c_calib_cur['K_feat_T'] @ voxel_cam_right
+            uvz_left = l2c_calib_cur['K_feat_T'] @ voxel_cam_left
+            uvz_right = l2c_calib_cur['K_feat_T'] @ voxel_cam_right  # projection index on right image plane
+            voxel_uv_left = torch.floor(uvz_left[:2, :] / uvz_left[2:, :]).type(torch.long)
             voxel_uv_right = torch.floor(uvz_right[:2, :] / uvz_right[2:, :]).type(torch.long)
 
             path_img = os.path.join(self.data_path, path_base, 'right_half', sample_cur['time']) + '.jpg'
@@ -250,8 +250,10 @@ class RSRD(Dataset):
             imgs_right = self.transform_jpg(img)
 
             return imgs_left, imgs_right, ele_gt, ele_mask, voxel_uv_left, voxel_uv_right, sample_cur['time']
-
-        return imgs_left, ele_gt, ele_mask, voxel_uv_left, sample_cur['time']
+        else:
+            uvz_left = l2c_calib_cur['K_feat_T'] @ voxel_cam_left
+            voxel_uv_left = torch.floor(uvz_left[:2, :] / uvz_left[2:, :]).type(torch.long)
+            return imgs_left, ele_gt, ele_mask, voxel_uv_left, sample_cur['time']
 
 if __name__ == '__main__':
     dataset = RSRD(down_scale=2, training=False, stereo=False)
