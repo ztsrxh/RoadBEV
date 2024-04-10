@@ -28,18 +28,18 @@ The elevation maps along with masks are saved in *.pkl* format.
 
 
 ## Environment
-* Python 3.9
-* Pytorch 1.11.0
+* Python 3.7
+* Pytorch 1.10.0
 
 ### Create a virtual environment and activate it.
 
 ```
-conda create -n roadbev python=3.9
+conda create -n roadbev python=3.7
 conda activate roadbev
 ```
 ### Dependencies
 ```
-conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -c nvidia
+conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c nvidia
 conda install -c open3d-admin open3d
 pip install opencv-python
 pip install pillow
