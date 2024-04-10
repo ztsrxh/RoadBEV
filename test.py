@@ -44,7 +44,7 @@ def test_sample(test_loader):
         metric.compute(pred, ele_gt, ele_mask)
 
     mean_time = times.mean().item()
-    print("Inference time: {:.6f}ms, FPS: {} ".format(mean_time, 1000 / mean_time))
+    print("Inference time: {:.2f}ms, FPS: {:.2f} ".format(mean_time, 1000 / mean_time))
 
     metric_values = metric.get_metric()
     return metric_values
