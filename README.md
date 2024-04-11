@@ -1,7 +1,7 @@
 
 
 ## Introduction
-This is the implementation of the work: [RoadBEV: Road Surface Reconstruction in Bird’s Eye View](https://arxiv.org/abs/XXX).
+This is the implementation of the work: [RoadBEV: Road Surface Reconstruction in Bird’s Eye View](https://arxiv.org/abs/2404.06605).
 
 Road surface reconstruction, an essential task for autonomous driving comfort control, suffers from poor performance in perspective view.
 We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with monocular and stereo images, respectively.
@@ -101,6 +101,13 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 If you find this project helpful in your research, welcome to cite the paper.
 
 ```bibtex
-
+@misc{zhao2024roadbev,
+      title={RoadBEV: Road Surface Reconstruction in Bird's Eye View}, 
+      author={Tong Zhao and Lei Yang and Yichen Xie and Mingyu Ding and Masayoshi Tomizuka and Yintao Wei},
+      year={2024},
+      eprint={2404.06605},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 
 ```
