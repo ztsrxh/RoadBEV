@@ -4,7 +4,7 @@
 This is the implementation of the work: [RoadBEV: Road Surface Reconstruction in Bird’s Eye View](https://arxiv.org/abs/2404.06605).
 
 Road surface reconstruction, an essential task for autonomous driving comfort control, suffers from poor performance in perspective view.
-We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with monocular and stereo images, respectively.
+We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with monocular and stereo images in Bird's Eye View, respectively.
 
 ![image](imgs/mono.png)
 ![image](imgs/stereo.png)
@@ -30,6 +30,7 @@ The elevation maps along with masks are saved in *.pkl* format.
 ## Environment
 * Python 3.7
 * Pytorch 1.10.0
+* open3d 0.16.0
 
 ### Create a virtual environment and activate it.
 
