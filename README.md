@@ -11,7 +11,7 @@ We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with 
 
 ## Data preparation
 
-We use Road Surface Reconstruction Dataset (RSRD). The GT elevation maps should be generated off-line, as it costs much computation.
+We use Road Surface Reconstruction Dataset (RSRD). The GT elevation maps should be generated off-line, as it costs much computation. The dataset used here is extracted from trainset of RSRD-dense. We split it into train (1210) and test (371) sets. You can split some from the train set for validation. The samples' info (including path, pose, location) are stored in *pkl* files in the *filenames* folder of this repo.
 
 * First, download [RSRD](https://thu-rsxd.com/rsrd) (the dense subset of 15.1GB) and the calibration files in [dev kit](https://github.com/ztsrxh/RSRD_dev_toolkit).
 Set the corresponding path in *dataset.py*.
@@ -24,8 +24,11 @@ Changes on them may lead to errors and inconsistent results. If you do change, r
 python preprocess_gt.py --save_dir '/data/preprocessed/' --dataset 'train'
 python preprocess_gt.py --save_dir '/data/preprocessed/' --dataset 'test'
 ```
-The elevation maps along with masks are saved in *.pkl* format.  
+　　The elevation maps along with masks are saved in *.pkl* format. For convenience, you can also directly download generated GT labels [here](https://drive.google.com/file/d/1m3G7Cb_qfIg2Q5Ng4-NdSMb66RDtEI2Z/view?usp=sharing).
 
+> [!NOTE]  
+> * Further, we provide the info for all samples in the RSRD-dense, which contains 2430 training and 296 testing samples [download](https://drive.google.com/file/d/1Hb2meQSmN9CCOkOwUJbHjv76yBUY2pWx/view?usp=sharing).
+> * The sample info for RSRD-sparse is also available, which contains 13K samples [download](https://drive.google.com/file/d/1i4lAahSvn8VVRCLqRpOJdvo2dOmLOppJ/view?usp=sharing). The RSRD-sparse can be used for pretraining since it has very sparse GT point cloud labels.
 
 ## Environment
 * Python 3.7
@@ -70,23 +73,23 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 [RoadBEV-stereo](https://drive.google.com/file/d/1amjd5x_UWiurxD7e7YH8Vv0Ll3VqQ9FK/view?usp=sharing)
 
 ### Performance for road surface reconstruction with RoadBEV-mono
-| Method | Abs. err. (cm) | RMSE |
-|:-:|:-:|:-:|
-| LapDepth | 2.81 | 3.12 |
-| PixelFormer | 2.65 | 2.86 |
-| iDisc | 2.64 | 2.88 | 
-| AdaBins | 2.59 | 2.79 |
-| RoadBEV-mono(Ours) | 1.83 | 2.07 |
+| Method | Abs. err. (cm) | RMSE | >0.5cm (%) |
+|:-:|:-:|:-:|:-:|
+| LapDepth | 2.81 | 3.12 | 85.3 |
+| PixelFormer | 2.65 | 2.86 | 82.0 |
+| iDisc | 2.64 | 2.88 | 84.3 |
+| AdaBins | 2.59 | 2.79 | 82.4 |
+| RoadBEV-mono(Ours) | 1.83 | 2.07 | 78.6 |
 
 ### Performance for road surface reconstruction with RoadBEV-stereo
-| Method | Abs. err. (cm) | RMSE |
-|:-:|:-:|:-:|
-| IGEV-Stereo | 0.651 | 0.797 |
-| PSMNet | 0.654 | 0.785 | 
-| CFNet | 0.647 | 0.760 |
-| ACVNet | 0.596 | 0.723 |
-| GwcNet | 0.588 | 0.711 |
-| RoadBEV-stereo(Ours) | 0.563 | 0.697 |
+| Method | Abs. err. (cm) | RMSE | >0.5cm (%) |
+|:-:|:-:|:-:|:-:|
+| IGEV-Stereo | 0.651 | 0.797 | 49.5|
+| PSMNet | 0.654 | 0.785 |  50.1 |
+| CFNet | 0.647 | 0.760 | 50.8 |
+| ACVNet | 0.596 | 0.723 | 46.2 |
+| GwcNet | 0.588 | 0.711 | 44.9 |
+| RoadBEV-stereo(Ours) | 0.563 | 0.697 | 43.2 |
 
 ### Distance-wise absolute error
 ![image](imgs/comparison.png)
