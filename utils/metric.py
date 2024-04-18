@@ -40,8 +40,11 @@ class Metric():
     @make_nograd_func
     def get_metric(self):
         metric_all = self.metric_all / self.count_all
-        metric_wise = self.metric_wise / self.count_wise.reshape(-1, 1)
-        return [metric_all, metric_wise]
+        if self.distance_wise:
+            metric_wise = self.metric_wise / self.count_wise.reshape(-1, 1)
+            return [metric_all, metric_wise]
+        else:
+            return [metric_all, None]
 
     @make_nograd_func
     def compute_values(self, ele_gt, ele_pred):
