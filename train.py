@@ -111,17 +111,17 @@ if __name__ == '__main__':
 
     if args.stereo:
         args.down_scale = 2
-        print('trining RoadBEV-stereo!')
+        print('training RoadBEV-stereo!')
     else:
         args.down_scale = 4
-        print('trining RoadBEV-mono!')
+        print('training RoadBEV-mono!')
 
     # dataset, dataloader
     train_set = RSRD(training=True, stereo=args.stereo, down_scale=args.down_scale)
     train_loader = DataLoader(train_set, args.batch_size, shuffle=True, num_workers=8, drop_last=True, pin_memory=True)
     test_set = RSRD(training=False, stereo=args.stereo, down_scale=args.down_scale)
     test_loader = DataLoader(test_set, 1, shuffle=False, num_workers=4, drop_last=False, pin_memory=True)
-    print('dataset size - train:%d, test%d' % (len(train_set), len(test_set)))
+    print('dataset size - train:%d, test:%d' % (len(train_set), len(test_set)))
 
     # model, optimizer
     ele_range = train_set.y_range
