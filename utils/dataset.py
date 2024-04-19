@@ -7,6 +7,7 @@ import os
 import PIL.Image
 from torchvision import transforms
 import open3d as o3d
+import copy
 
 class RSRD(Dataset):
     def __init__(self, training=True, stereo=False, down_scale=2):
@@ -238,7 +239,7 @@ class RSRD(Dataset):
         voxel_cam_left = R_vert2cam @ self.voxel_centers
         if self.stereo:
             #########   calculate the index relationship between 3D voxels and 2D pixels   ##############
-            voxel_cam_right = voxel_cam_left
+            voxel_cam_right = copy.deepcopy(voxel_cam_left)
             voxel_cam_right[0, :] = voxel_cam_right[0, :] - l2c_calib_cur['B']
             uvz_left = l2c_calib_cur['K_feat_T'] @ voxel_cam_left
             uvz_right = l2c_calib_cur['K_feat_T'] @ voxel_cam_right  # projection index on right image plane
