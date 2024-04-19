@@ -92,7 +92,7 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 | RoadBEV-stereo(Ours) | 0.512 | 0.623 | 38.2 |
 
 ### Distance-wise absolute error
-![image](imgs/comparison.png)
+![image](imgs/comparisons.png)
 
 ## Visualization of reconstruction by RoadBEV-mono
 ![image](imgs/visualization_mono.png)
