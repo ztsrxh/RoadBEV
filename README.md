@@ -70,7 +70,7 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 ## Results
 ### Pretrained Model
 [RoadBEV-mono](https://drive.google.com/file/d/1i-QgX8rLTDUmqpRN7bM4_AzK8dgk_PUn/view?usp=sharing), 
-[RoadBEV-stereo](https://drive.google.com/file/d/1amjd5x_UWiurxD7e7YH8Vv0Ll3VqQ9FK/view?usp=sharing)
+[RoadBEV-stereo](https://drive.google.com/file/d/1H9vBRGISG97-PmtxcaKA4FzezX0wcXg-/view?usp=sharing)
 
 ### Performance for road surface reconstruction with RoadBEV-mono
 | Method | Abs. err. (cm) | RMSE | >0.5cm (%) |
@@ -89,7 +89,7 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 | CFNet | 0.647 | 0.760 | 50.8 |
 | ACVNet | 0.596 | 0.723 | 46.2 |
 | GwcNet | 0.588 | 0.711 | 44.9 |
-| RoadBEV-stereo(Ours) | 0.563 | 0.697 | 43.2 |
+| RoadBEV-stereo(Ours) | 0.512 | 0.623 | 38.2 |
 
 ### Distance-wise absolute error
 ![image](imgs/comparison.png)
