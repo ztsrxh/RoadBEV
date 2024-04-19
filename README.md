@@ -92,13 +92,20 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 | RoadBEV-stereo(Ours) | 0.512 | 0.623 | 38.2 |
 
 ### Distance-wise absolute error
-![image](imgs/comparisons.png)
+![image](imgs/comparison.png)
 
 ## Visualization of reconstruction by RoadBEV-mono
 ![image](imgs/visualization_mono.png)
 
 ## Visualization of reconstruction by RoadBEV-stereo
 ![image](imgs/fig_1.jpg)
+
+## Further research
+This is the first exploration of reconstructing road surface in BEV. Future research can be improved in the following aspects:
+* More accuract 3D-2D indexing. We directly index the integer pixel without interpolation of nearby features.
+* More advanced backbone. Introducting attention mechanism, transformer...
+* Classification with offsets. We regress elevation values with soft argmin(weighted sum of bins). Peak class with offset can also be adopted.
+* More efficient estimation head. For RoadBEV-stereo, the 3D convs cost much computation. More strategies can be explored.
 
 # Citation
 
