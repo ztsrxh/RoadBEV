@@ -14,7 +14,7 @@ We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with 
 We use Road Surface Reconstruction Dataset (RSRD). The GT elevation maps should be generated off-line, as it costs much computation. The dataset used here is extracted from trainset of RSRD-dense. We split it into train (1210) and test (371) sets. You can split some from the train set for validation. The samples' info (including path, pose, location) are stored in *pkl* files in the *filenames* folder of this repo.
 
 * First, download [RSRD](https://thu-rsxd.com/rsrd) (the dense subset of 15.1GB) and the calibration files in [dev kit](https://github.com/ztsrxh/RSRD_dev_toolkit).
-Set the corresponding path in *dataset.py*.
+**Set the corresponding path in *dataset.py***.
 
 * Generate and save the GT maps to local. The GT maps depend on ROI and horizontal resolution. 
 We do not recommend changing the related parameters in *dataset.py*, as they are determined based on statistic analysis on the dataset. 
@@ -30,6 +30,40 @@ python preprocess_gt.py --save_dir '/data/preprocessed/' --dataset 'test'
 > * Further, we provide the info for all samples in the RSRD-dense, which contains 2430 training and 296 testing samples [download](https://drive.google.com/file/d/1Hb2meQSmN9CCOkOwUJbHjv76yBUY2pWx/view?usp=sharing).
 > * The sample info for RSRD-sparse is also available, which contains 13K samples [download](https://drive.google.com/file/d/1i4lAahSvn8VVRCLqRpOJdvo2dOmLOppJ/view?usp=sharing). The RSRD-sparse can be used for pretraining since it has very sparse GT point cloud labels.
 
+The directories should be like:
+```shell
+RoadBEV
+├── utils
+│   └── dataset.py
+├── filenames
+│   ├── train
+│   │    ├── 20230317074852.000.pkl
+│   │    └── ...
+│   ├── test
+│   │    ├── 20230317075641.200.pkl
+│   │    └── ...
+├── train.py
+├── test.py
+└── preprocess_gt.py
+
+RSRD-dense
+├── train
+│   ├── 2023-03-17-07-48-37
+│   │    ├── left_half
+│   │    ├── right_half
+│   │    ├── pcd
+│   │    └── ...
+│   ├── 2023-03-21-07-36-59
+│   └──...
+
+preprocessed
+├── train
+│   ├── 20230409021332.400.pkl
+│   └── ...
+├── test
+│   ├── 20230409015836.600.pkl
+│   └── ...
+```
 ## Environment
 * Python 3.7
 * Pytorch 1.10.0
