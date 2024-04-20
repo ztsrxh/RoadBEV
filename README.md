@@ -7,7 +7,7 @@ Road surface reconstruction, an essential task for autonomous driving comfort co
 We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with monocular and stereo images in Bird's Eye View, respectively.
 
 ![image](imgs/mono.png)
-![image](imgs/stereo.png)
+![image](imgs/stereo_arch.png)
 
 ## Data preparation
 
