@@ -37,7 +37,7 @@ def get_item(index):
 
     cloud_camvert = cloud.rotate(R_cam2vert, center=(0, 0, 0))
     # crop the point cloud according to the given range of interest
-    cloud_camvert = dataset.vol_roi.crop_point_cloud(cloud_camvert)
+    cloud_camvert = vol_roi.crop_point_cloud(cloud_camvert)
 
     ele_gt, ele_mask = dataset.get_gt_elevation(cloud_camvert)
 
@@ -50,12 +50,23 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     training = args.dataset == 'train'
-    dataset = RSRD(training=training, stereo=False, down_scale=2)
+    dataset = RSRD(training=training)
     if training:
         path = os.path.join(args.save_dir, 'train')
     else:
         path = os.path.join(args.save_dir, 'test')
     os.makedirs(path, exist_ok=True)
+
+    # parameters for cropping ROI point clouds
+    crop_bounding = np.array([[dataset.roi_x[0], 0, dataset.roi_z[0]],
+                                   [dataset.roi_x[0], 0, dataset.roi_z[1]],
+                                   [dataset.roi_x[1], 0, dataset.roi_z[1]],
+                                   [dataset.roi_x[1], 0, dataset.roi_z[0]]]).astype("float64")
+    vol_roi = o3d.visualization.SelectionPolygonVolume()
+    vol_roi.orthogonal_axis = "Y"
+    vol_roi.axis_max = 1.5
+    vol_roi.axis_min = 0.5
+    vol_roi.bounding_polygon = o3d.utility.Vector3dVector(crop_bounding)
 
     for i in tqdm(range(len(dataset))):
         ele_gt, ele_mask, stamp = get_item(i)
