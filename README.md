@@ -1,5 +1,8 @@
 
-
+## Update logs and News
+* 19/April/2024 - We have fixed the problem of *TypeError: can't pickle xxxx objects* in code.
+* 17/April/2024 - We fixed the code problem in 3D-2D projection of RoadBEV-stereo.
+  
 ## Introduction
 This is the implementation of the work: [RoadBEV: Road Surface Reconstruction in Bird’s Eye View](https://arxiv.org/abs/2404.06605).
 
@@ -123,6 +126,7 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 | CFNet | 0.647 | 0.760 | 50.8 |
 | ACVNet | 0.596 | 0.723 | 46.2 |
 | GwcNet | 0.588 | 0.711 | 44.9 |
+| [DVANet](https://github.com/ztsrxh/DVANet) | 0.546 | 0.685 | 40.9 |
 | RoadBEV-stereo(Ours) | 0.503 | 0.609 | 37.0 |
 
 ### Distance-wise absolute error
@@ -140,7 +144,7 @@ This is the first exploration of reconstructing road surface in BEV. Future rese
 * More advanced backbone. Introducting attention mechanism, transformer...
 * Classification with offsets. We regress elevation values with soft argmin(weighted sum of bins). Peak class with offset can also be adopted.
 * More efficient estimation head. For RoadBEV-stereo, the 3D convs cost much computation. More strategies can be explored.
-
+* Our previous research [DVANet](https://github.com/ztsrxh/DVANet), which reconstructs road surface with stereo matching, may provide valuable insights.
 # Citation
 
 If you find this project helpful in your research, welcome to cite the paper.
