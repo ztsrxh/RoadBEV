@@ -18,7 +18,7 @@ class RSRD(Dataset):
 
         self.calib_path = '/dataset/RSRD_calib/'  # path for calibration files
         self.data_path = '/dataset/RSRD-dense/train/'     # path for the training set of RSRD-dense
-        preprocessed_path = '/dataset/RSRD-dense/ele_preprocessed/'  # path for preprocessed GT maps
+        preprocessed_path = './preprocessed/'  # path for preprocessed GT maps
 
         if self.training:
             self.load_dataset_names('./filenames/train/')
@@ -54,17 +54,6 @@ class RSRD(Dataset):
         voxel_centers[:, :, :, 1] = (torch.arange(self.num_grids_y) * self.grid_res[1] + self.base_height - self.y_range + self.grid_res[1]/2).unsqueeze(0).unsqueeze(0).repeat([self.num_grids_z, self.num_grids_x, 1])
         self.voxel_centers = voxel_centers.reshape(-1, 3).transpose(1, 0)
 
-        # parameters for cropping ROI point clouds
-        self.crop_bounding = np.array([[self.roi_x[0], 0, self.roi_z[0]],
-                                       [self.roi_x[0], 0, self.roi_z[1]],
-                                       [self.roi_x[1], 0, self.roi_z[1]],
-                                       [self.roi_x[1], 0, self.roi_z[0]]]).astype("float64")
-        self.vol_roi = o3d.visualization.SelectionPolygonVolume()
-        self.vol_roi.orthogonal_axis = "Y"
-        self.vol_roi.axis_max = 1.5
-        self.vol_roi.axis_min = 0.5
-        self.vol_roi.bounding_polygon = o3d.utility.Vector3dVector(self.crop_bounding)
-
         # pre_read the extrinsic parameters between camera and lidar
         # intrinsics (after rectification): calib_params["K"]
         # stereo baseline(in mm): calib_params["B"]
@@ -88,8 +77,6 @@ class RSRD(Dataset):
             transforms.ToTensor(),  # image --> [0, 1]
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])  # [0, 1] --> [-1, 1]
         ])
-        self.gen = torch.Generator()
-        self.gen.manual_seed(1000)
 
     def load_dataset_names(self, sample_path):
         data_all = []
@@ -151,7 +138,6 @@ class RSRD(Dataset):
 
     def get_gt_elevation(self, cloud_camvert):
         xyz = torch.from_numpy(np.asarray(cloud_camvert.points, dtype=np.float32))
-        # xyz = self.random_sample(xyz, int(len(xyz)/3))  # down sample
 
         N, _ = xyz.shape
         y = xyz[:, 1]*100  # m --> cm
@@ -186,12 +172,6 @@ class RSRD(Dataset):
         with open(os.path.join(self.preprocessed_path, time)+'.pkl', 'rb') as f:
             [ele_gt, ele_mask] = pickle.load(f)
         return ele_gt, ele_mask
-
-    def random_sample(self, xyz, num_center):
-        N = xyz.shape[0]
-        centroids = torch.multinomial(torch.ones(N), num_center, replacement=False, generator=self.gen)
-
-        return xyz[centroids, :]
 
     def matrix2euler(self, m):
         # order='XYZ'
@@ -240,6 +220,7 @@ class RSRD(Dataset):
         if self.stereo:
             #########   calculate the index relationship between 3D voxels and 2D pixels   ##############
             voxel_cam_right = copy.deepcopy(voxel_cam_left)
+            # voxel_cam_right = voxel_cam_left
             voxel_cam_right[0, :] = voxel_cam_right[0, :] - l2c_calib_cur['B']
             uvz_left = l2c_calib_cur['K_feat_T'] @ voxel_cam_left
             uvz_right = l2c_calib_cur['K_feat_T'] @ voxel_cam_right  # projection index on right image plane
