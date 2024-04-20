@@ -63,7 +63,7 @@ class Elevation(nn.Module):
             voxel_feat_right = features_right.gather(dim=2, index=linear_indices.unsqueeze(1).expand(-1, C, -1))
             voxel_feat_right = voxel_feat_right.reshape(B, C, self.num_grids_z, self.num_grids_x, self.num_grids_y)
 
-            voxel_feature = voxel_feat_left - voxel_feat_right
+            voxel_feature = voxel_feat_left * voxel_feat_right
             voxel_feature = voxel_feature.permute(0, 1, 4, 2, 3)  # [B, C, Y, Z, X]
         else:
             voxel_feature = voxel_feat_left    # [B, C, Z, X, Y]
