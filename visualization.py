@@ -54,6 +54,7 @@ def plot_3d_surface():
     plt.show()
 
 if __name__ == '__main__':
+    # this script visualizes the elevation inference. Before that, save the ele_pred as .pkl file
     rsrd = RSRD()
     path_pred = './bev_pred/20230408023811.200.pkl'
 
