@@ -42,7 +42,7 @@ def test_sample(test_loader):
         times[i] = starter.elapsed_time(ender)
 
         metric.compute(pred, ele_gt, ele_mask)
-        with open('./bev_pred/' + cur_time + '.pkl', 'wb') as f:
+        with open('./bev_pred/' + cur_time[0] + '.pkl', 'wb') as f:
             pickle.dump(pred.squeeze().data.cpu(), f)
     
     mean_time = times.mean().item()
