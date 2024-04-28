@@ -25,10 +25,10 @@ def test_sample(test_loader):
     model.eval()
     for i, sample in enumerate(test_loader):
         if args.stereo:
-            (imgs_left, imgs_right, ele_gt, ele_mask, proj_index_left, proj_index_right, _) = sample
+            (imgs_left, imgs_right, ele_gt, ele_mask, proj_index_left, proj_index_right, cur_time) = sample
             imgs_right, proj_index_right = imgs_right.cuda(), proj_index_right.cuda()
         else:
-            (imgs_left, ele_gt, ele_mask, proj_index_left, _) = sample
+            (imgs_left, ele_gt, ele_mask, proj_index_left, cur_time) = sample
         imgs_left, ele_gt, ele_mask, proj_index_left = imgs_left.cuda(), ele_gt.cuda(), ele_mask.cuda(), proj_index_left.cuda()
 
         starter.record()
@@ -42,7 +42,9 @@ def test_sample(test_loader):
         times[i] = starter.elapsed_time(ender)
 
         metric.compute(pred, ele_gt, ele_mask)
-
+        with open('./bev_pred/' + cur_time + '.pkl', 'wb') as f:
+            pickle.dump(pred.squeeze().data.cpu(), f)
+    
     mean_time = times.mean().item()
     print("Inference time: {:.2f}ms, FPS: {:.2f} ".format(mean_time, 1000 / mean_time))
 
@@ -63,7 +65,8 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
-
+    os.makedirs('./bev_pred/', exist_ok=True)
+    
     if args.stereo:
         args.down_scale = 2
         print('Testing RoadBEV-stereo!')
@@ -76,7 +79,7 @@ if __name__ == '__main__':
     test_loader = DataLoader(test_set, 1, shuffle=False, num_workers=4, drop_last=False, pin_memory=True)
     print('test set:', len(test_set))
 
-    # model, optimizer
+    # model
     ele_range = test_set.y_range
     voxel_ele_res = test_set.grid_res[1]
     num_grids = [test_set.num_grids_x, test_set.num_grids_y, test_set.num_grids_z]
