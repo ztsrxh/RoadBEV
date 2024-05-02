@@ -32,7 +32,7 @@ python preprocess_gt.py --save_dir '/data/preprocessed/' --dataset 'test'
 
 > [!NOTE]  
 > * Further, we provide the info for all samples in the RSRD-dense, which contains 2430 training and 296 testing samples [download](https://drive.google.com/file/d/1Hb2meQSmN9CCOkOwUJbHjv76yBUY2pWx/view?usp=sharing).
-> * The sample info for RSRD-sparse is also available, which contains 13K samples [download](https://drive.google.com/file/d/1i4lAahSvn8VVRCLqRpOJdvo2dOmLOppJ/view?usp=sharing). The RSRD-sparse can be used for pretraining since it has very sparse GT point cloud labels.
+> * The sample info for RSRD-sparse is also available, which contains 13K samples [download](https://drive.google.com/file/d/1i4lAahSvn8VVRCLqRpOJdvo2dOmLOppJ/view?usp=sharing). It has very sparse GT point cloud labels, which can be used for pretraining or unsupervised learning.
 
 The directories should be like:
 ```shell
@@ -134,18 +134,23 @@ python test.py --stereo --loadckpt 'xxx.ckpt'  # test RoadBEV-stereo
 ![image](imgs/comparison.png)
 
 ## Visualization of reconstruction by RoadBEV-mono
+Visualize the inference results saved as *.pkl* files in *test.py*:
+```
+python visualization.py
+```
 ![image](imgs/visualization_mono.png)
 
 ## Visualization of reconstruction by RoadBEV-stereo
 ![image](imgs/fig_1.jpg)
 
-## Further research
+## Future research
 This is the first exploration of reconstructing road surface in BEV. Future research can be improved in the following aspects:
 * More accuract 3D-2D indexing. We directly index the integer pixel without interpolation of nearby features.
 * More advanced backbone. Introducting attention mechanism, transformer...
 * Classification with offsets. We regress elevation values with soft argmin(weighted sum of bins). Peak class with offset can also be adopted.
 * More efficient estimation head. For RoadBEV-stereo, the 3D convs cost much computation. More strategies can be explored.
-* Our previous research [DVANet](https://github.com/ztsrxh/DVANet), which reconstructs road surface with stereo matching, may provide valuable insights.
+* Utilizing the RSRD-sparse. It contains much more samples, which will greatly enhance model generalization capability.
+* Our previous research [DVANet](https://github.com/ztsrxh/DVANet), which reconstructs road surface with direct stereo matching, may provide valuable insights.
 # Citation
 
 If you find this project helpful in your research, welcome to cite the paper.
