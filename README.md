@@ -144,8 +144,9 @@ python visualization.py
 ![image](imgs/fig_1.jpg)
 
 ## Future research
-This is the first exploration of reconstructing road surface in BEV. Future research can be improved in the following aspects:
-* More accuract 3D-2D indexing. We directly index the integer pixel without interpolation of nearby features.
+This is the very initial exploration of reconstructing road surface in BEV. Future research can be improved in many aspects like:
+* More accuract 3D-2D BEV query indexing, with spatial cross-attention...
+* Utilizing sequence information with temporal attention. The provided dataset filenames have some continuous sequences.
 * More advanced backbone. Introducting attention mechanism, transformer...
 * Classification with offsets. We regress elevation values with soft argmin(weighted sum of bins). Peak class with offset can also be adopted.
 * More efficient estimation head. For RoadBEV-stereo, the 3D convs cost much computation. More strategies can be explored.
