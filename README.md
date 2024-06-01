@@ -150,7 +150,7 @@ This is the very initial exploration of reconstructing road surface in BEV. Futu
 * More advanced backbone. Introducting attention mechanism, transformer...
 * Classification with offsets. We regress elevation values with soft argmin(weighted sum of bins). Peak class with offset can also be adopted.
 * More efficient estimation head. For RoadBEV-stereo, the 3D convs cost much computation. More strategies can be explored.
-* Utilizing the RSRD-sparse. It contains much more samples, which will greatly enhance model generalization capability.
+* Utilizing the RSRD-sparse. It contains much more samples, which will greatly enhance model generalization capability. Samples in it can also be used for visualization and inference. 
 * Our previous research [DVANet](https://github.com/ztsrxh/DVANet), which reconstructs road surface with direct stereo matching, may provide valuable insights.
 # Citation
 
