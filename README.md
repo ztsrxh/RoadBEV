@@ -147,6 +147,7 @@ python visualization.py
 ## Future research
 This is the very initial exploration of reconstructing road surface in BEV. Future research can be improved in many aspects like:
 * More accuract 3D-2D BEV query indexing, with spatial cross-attention...
+* Using sparse representation. We define dense candidate voxels and then query features. Sparse road scene encoding may help.
 * Utilizing sequence information with temporal attention. The provided dataset filenames have some continuous sequences.
 * More advanced backbone. Introducting attention mechanism, transformer...
 * Classification with offsets. We regress elevation values with soft argmin(weighted sum of bins). Peak class with offset can also be adopted.
