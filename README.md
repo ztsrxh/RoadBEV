@@ -1,5 +1,6 @@
 
 ## Update logs and News
+* July/2024 - Our paper is accepted by *IEEE Trans. Intell. Transp. Syst.*.
 * 23/April/2024 - **We have revised and updated version 2 of the paper.**
 * 19/April/2024 - We have fixed the problem of *TypeError: can't pickle xxxx objects* in code.
 * 17/April/2024 - We fixed the code problem in 3D-2D projection of RoadBEV-stereo.
