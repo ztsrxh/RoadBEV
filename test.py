@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
     model = Elevation(args.stereo, num_grids, ele_range, args.cla_res).cuda()
     print('num params:', sum(p.numel() for p in model.parameters() if p.requires_grad))
-    metric = Metric(ele_range, args.cla_res, test_set.num_grids_z, distance_wise=True)
+    metric = Metric(test_set.num_grids_z, distance_wise=True)
 
     print("loading model {}".format(args.loadckpt))
     state_dict = torch.load(args.loadckpt)
