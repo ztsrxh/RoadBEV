@@ -4,10 +4,10 @@ import torch
 import matplotlib.pyplot as plt
 
 class Metric():
-    def __init__(self, ele_range, cla_res, num_grids_z, distance_wise=False):
-        self.ele_range = ele_range*100
-        self.res = cla_res  # in cm
-        self.num_classes = int(2 * self.ele_range / self.res)
+    def __init__(self, num_grids_z, distance_wise=False):
+        # self.ele_range = ele_range*100
+        # self.res = cla_res  # in cm
+        # self.num_classes = int(2 * self.ele_range / self.res)
 
         self.metric_all = np.zeros(3,)
         self.count_all = 0
