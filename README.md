@@ -157,16 +157,25 @@ This is the very initial exploration of reconstructing road surface in BEV. Futu
 * Our previous research [DVANet](https://github.com/ztsrxh/DVANet), which reconstructs road surface with direct stereo matching, may provide valuable insights.
 # Citation
 
-If you find this project helpful in your research, welcome to cite the paper.
+If you find this project helpful in your research, please cite the papers below.
 
 ```bibtex
-@misc{zhao2024roadbev,
-      title={RoadBEV: Road Surface Reconstruction in Bird's Eye View}, 
-      author={Tong Zhao and Lei Yang and Yichen Xie and Mingyu Ding and Masayoshi Tomizuka and Yintao Wei},
-      year={2024},
-      eprint={2404.06605},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
+
+@ARTICLE{RoadBEV_tongzhao,
+  author={Zhao, Tong and He, Junxiang and Lv, Jingcheng and Min, Delei and Wei, Yintao},
+  journal={IEEE Transactions on Intelligent Transportation Systems}, 
+  title={RoadBEV: Road Surface Reconstruction in Bird's Eye View}, 
+  year={2024},
+  keywords={Roads;Friction;Feature extraction;Training;Sensors;Task analysis;Robustness;Road classification;road surface monitoring;computer vision;decision-level fusion;driving assistance},
+  doi={10.1109/TITS.2024.3431671}}
+
+@article{rsrd_tongzhao,
+  title={A road surface reconstruction dataset for autonomous driving},
+  author={Zhao, Tong and Xie, Yichen and Ding, Mingyu and Yang, Lei and Tomizuka, Masayoshi and Wei, Yintao},
+  journal={Scientific data},
+  volume={11},
+  number={1},
+  pages={459},
+  year={2024}}
 
 ```
