@@ -132,7 +132,7 @@ if __name__ == '__main__':
     model.train()
 
     loss_func = MyLoss(ele_range, voxel_ele_res, args.cla_res).cuda()
-    metric = Metric(train_set.num_grids_z, distance_wise=False)
+    metric = Metric(ele_range, train_set.num_grids_z, distance_wise=False)
 
     url = 'https://download.pytorch.org/models/efficientnet_b6_lukemelas-c76e70fd.pth'
     try:
