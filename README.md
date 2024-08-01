@@ -162,11 +162,13 @@ If you find this project helpful in your research, please cite the papers below.
 ```bibtex
 
 @ARTICLE{RoadBEV_tongzhao,
-  author={Zhao, Tong and He, Junxiang and Lv, Jingcheng and Min, Delei and Wei, Yintao},
+  author={Zhao, Tong and Yang, Lei and Xie, Yichen and Ding, Mingyu and Tomizuka, Masayoshi and Wei, Yintao},
   journal={IEEE Transactions on Intelligent Transportation Systems}, 
-  title={RoadBEV: Road Surface Reconstruction in Bird's Eye View}, 
+  title={RoadBEV: Road Surface Reconstruction in Bird’s Eye View}, 
   year={2024},
-  keywords={Roads;Friction;Feature extraction;Training;Sensors;Task analysis;Robustness;Road classification;road surface monitoring;computer vision;decision-level fusion;driving assistance},
+  volume={},
+  number={},
+  pages={1-12},
   doi={10.1109/TITS.2024.3431671}}
 
 @article{rsrd_tongzhao,
