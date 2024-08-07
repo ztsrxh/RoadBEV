@@ -140,33 +140,20 @@ class RSRD(Dataset):
         xyz = torch.from_numpy(np.asarray(cloud_camvert.points, dtype=np.float32))
 
         N, _ = xyz.shape
-        y = xyz[:, 1]*100  # m --> cm
-        xz = xyz[:, [0, 2]]
-        elevation_gt = torch.zeros(self.num_center, dtype=torch.float32)
-        count_map = torch.zeros(self.num_center, dtype=torch.int8)
+        points_y = xyz[:, 1]*100  # points, m --> cm
+        points_xz = xyz[:, [0, 2]]
+        grids_y = torch.zeros((self.num_grids_z, self.num_grids_x), dtype=torch.float32)
+        grids_count = torch.zeros((self.num_grids_z, self.num_grids_x), dtype=torch.int8)
 
-        xyz_center_b = self.map_centers
-        xyz_center_b = xyz_center_b.unsqueeze(dim=1).repeat([1, N, 1])  # [num_center,2] -> [num_center, 1, 2] -> [num_center, num_points_all, 2]
-        xyz_center_b = xyz_center_b - xz.unsqueeze(0).repeat([self.num_center, 1, 1])  # distance of every grid center to all points
+        for xz, y in zip(points_xz, points_y):
+            idx_x = int((xz[0] - self.roi_x[0]) / self.grid_res[0])
+            idx_z = self.num_grids_z - 1 - int((xz[1] - self.roi_z[0]) / self.grid_res[2])
+            grids_y[idx_z, idx_x] += y
+            grids_count[idx_z, idx_x] += 1
+        mask = grids_count > 0
+        grids_y[mask] = self.base_height*100 - grids_y[mask] / grids_count[mask]
 
-        inner_bool = torch.logical_and(torch.abs(xyz_center_b[:, :, 0]) <= self.grid_res[0]/2, torch.abs(xyz_center_b[:, :, 1]) <= self.grid_res[2]/2)
-        group_idx = torch.arange(N, dtype=torch.long).reshape(1, N).repeat([self.num_center, 1])
-        inner_indexes = group_idx * inner_bool.long()  # [num_center, num_points_all] mask
-        # index the inner points in grids and construct the map
-        valid_indexes = inner_indexes.nonzero()
-        for valid in valid_indexes:  # the loop will run N times (as every point will fall into one grid)
-            elevation_gt[valid[0]] = elevation_gt[valid[0]] + y[inner_indexes[valid[0], valid[1]]]  # record the y value
-            count_map[valid[0]] = count_map[valid[0]] + 1
-
-        elevation_mask = count_map > 0
-        elevation_gt[elevation_mask] = elevation_gt[elevation_mask] / count_map[elevation_mask]   # calculate the average elevation of every grid
-        elevation_gt = elevation_gt.reshape(self.num_grids_z, self.num_grids_x)
-        elevation_mask = elevation_mask.reshape(self.num_grids_z, self.num_grids_x)
-
-        # finally, obtain the elevation map relative to the base height (in cm)
-        elevation_gt[elevation_mask] = self.base_height*100 - elevation_gt[elevation_mask]
-
-        return elevation_gt, elevation_mask
+        return grids_y, mask
 
     def get_gt_preprocessed(self, time):
         with open(os.path.join(self.preprocessed_path, time)+'.pkl', 'rb') as f:
