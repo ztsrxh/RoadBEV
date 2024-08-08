@@ -136,9 +136,7 @@ class RSRD(Dataset):
 
         return R_cur2enu
 
-    def get_gt_elevation(self, cloud_camvert):
-        xyz = torch.from_numpy(np.asarray(cloud_camvert.points, dtype=np.float32))
-
+    def get_gt_elevation(self, xyz):
         N, _ = xyz.shape
         points_y = xyz[:, 1]*100  # points, m --> cm
         points_xz = xyz[:, [0, 2]]
@@ -146,8 +144,8 @@ class RSRD(Dataset):
         grids_count = torch.zeros((self.num_grids_z, self.num_grids_x), dtype=torch.int8)
 
         for xz, y in zip(points_xz, points_y):
-            idx_x = int((xz[0] - self.roi_x[0]) / self.grid_res[0])
-            idx_z = self.num_grids_z - 1 - int((xz[1] - self.roi_z[0]) / self.grid_res[2])
+            idx_x = torch.clip(((xz[0] - self.roi_x[0]) / self.grid_res[0]).int(), max=self.num_grids_x-1)
+            idx_z = torch.clip(self.num_grids_z - 1 - ((xz[1] - self.roi_z[0]) / self.grid_res[2]).int(), min=0)
             grids_y[idx_z, idx_x] += y
             grids_count[idx_z, idx_x] += 1
         mask = grids_count > 0
