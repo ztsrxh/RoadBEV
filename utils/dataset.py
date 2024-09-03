@@ -17,7 +17,8 @@ class RSRD(Dataset):
         self.down_scale = down_scale
 
         self.calib_path = '/dataset/RSRD_calib/'  # path for calibration files
-        self.data_path = '/dataset/RSRD-dense/train/'     # path for the training set of RSRD-dense
+        # path for training set of RSRD-dense. Both the train and test sets in this work are from the train set of RSRD-dense
+        self.data_path = '/dataset/RSRD-dense/train/'   
         preprocessed_path = './preprocessed/'  # path for preprocessed GT maps
 
         if self.training:
@@ -28,14 +29,16 @@ class RSRD(Dataset):
             self.preprocessed_path = os.path.join(preprocessed_path, 'test')
 
         #######################
-        # settings about range of interest  !! do not change !!
+        # settings about range of interest. If you change the params below, please confirm that the voxel ROI completely falls in the image view.
         #######################
         self.base_height = 1.1  # in meter, the reference height of the camera w.r.t. road surface
         self.y_range = 0.2  # in meter, the range of interest above and below the base height， i.e., [-20cm, 20cm]
         self.roi_x = torch.tensor([-1, 0.92])    # in meter, the lateral range of interest (in the horizontal coordinate of camera)
         self.roi_z = torch.tensor([2.16, 7.08])    # in meter, the longitudinal range of interest
-        self.grid_res = torch.tensor([0.03, 0.01, 0.03])  # in [x, y(vertical), z] order. The range of interest above should be integer times of resolution here
         #######################
+        
+        self.grid_res = torch.tensor([0.03, 0.01, 0.03])  # in [x, y(vertical), z] order. The range of interest above should be integer times of resolution here
+        
 
         self.num_grids_x = int((self.roi_x[1] - self.roi_x[0]) / self.grid_res[0])
         self.num_grids_z = int((self.roi_z[1] - self.roi_z[0]) / self.grid_res[2])
@@ -67,6 +70,7 @@ class RSRD(Dataset):
             calib_params['R'] = calib_params['R'].astype(np.float32)
             calib_params['T'] = calib_params['T'].astype(np.float32)
             calib_params['B'] = calib_params['B']/1000   # mm -> m
+            # 'K_feat_T' is the intrinsic of the reduced feature map
             calib_params['K_feat_T'] = torch.from_numpy(calib_params['K'] / self.down_scale)
             calib_params['K_feat_T'][2, 2] = 1
             calib_params['R_inv'] = np.linalg.inv(calib_params['R']).astype(np.float32)
