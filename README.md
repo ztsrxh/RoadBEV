@@ -31,10 +31,10 @@ python preprocess_gt.py --save_dir '/data/preprocessed/' --dataset 'test'
 ```
 　　The elevation maps along with masks are saved in *.pkl* format. For convenience, you can also directly download generated GT labels [here](https://drive.google.com/file/d/1m3G7Cb_qfIg2Q5Ng4-NdSMb66RDtEI2Z/view?usp=sharing).
 
-> [!NOTE]  
-> * Further, we provide the info for all samples in the RSRD-dense, which contains 2430 training and 296 testing samples [download](https://drive.google.com/file/d/1Hb2meQSmN9CCOkOwUJbHjv76yBUY2pWx/view?usp=sharing).
+> [!NOTE]
+> * **The provided small dataset in this work is just an example, as we focus more on the feasibility of the pipeline. Reserachers can also build larger train/test sets with the provided data below:**
+> * We provide the info for all samples in the RSRD-dense, which contains 2430 training and 296 testing samples [download](https://drive.google.com/file/d/1Hb2meQSmN9CCOkOwUJbHjv76yBUY2pWx/view?usp=sharing).
 > * The sample info for RSRD-sparse is also available, containing 13K samples [download](https://drive.google.com/file/d/1i4lAahSvn8VVRCLqRpOJdvo2dOmLOppJ/view?usp=sharing). It has very sparse GT point cloud labels, which can be used for pretraining or unsupervised learning.
-> * **The provided small dataset in this work is just an example, as we focus more on the feasibility of the pipeline. Reserachers can also build larger train/test sets with the provided data.**
 
 The directories should be like:
 ```shell
