@@ -6,7 +6,7 @@
 * 17/April/2024 - We fixed the code problem in 3D-2D projection of RoadBEV-stereo.
   
 ## Introduction
-This is the implementation of the work: [RoadBEV: Road Surface Reconstruction in Bird’s Eye View](https://arxiv.org/abs/2404.06605).
+This is the implementation of the work: [RoadBEV: Road Surface Reconstruction in Bird’s Eye View](https://doi.org/10.1109/TITS.2024.3431671).
 
 Road surface reconstruction, an essential task for autonomous driving comfort control, suffers from poor performance in perspective view.
 We propose RoadBEV-mono and RoadBeV-stereo, which reconstruct road surface with monocular and stereo images in Bird's Eye View, respectively.
