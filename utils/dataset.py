@@ -141,6 +141,7 @@ class RSRD(Dataset):
         return R_cur2enu
 
     def get_gt_elevation(self, xyz):
+        xyz = np.asarray(xyz.points)
         N, _ = xyz.shape
         points_y = xyz[:, 1]*100  # points, m --> cm
         points_xz = xyz[:, [0, 2]]
