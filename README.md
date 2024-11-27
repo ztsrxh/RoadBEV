@@ -166,9 +166,9 @@ If you find this project helpful in your research, please cite the papers below.
   journal={IEEE Transactions on Intelligent Transportation Systems}, 
   title={RoadBEV: Road Surface Reconstruction in Bird’s Eye View}, 
   year={2024},
-  volume={},
-  number={},
-  pages={1-12},
+  volume={25},
+  number={11},
+  pages={19088-19099},
   doi={10.1109/TITS.2024.3431671}}
 
 @article{rsrd_tongzhao,
